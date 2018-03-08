@@ -18,6 +18,7 @@ module.exports = env => {
 
 function commonConfig() {
   return {
+    mode: "development",
     stats: "minimal",
     module: {
       rules: [
@@ -81,24 +82,22 @@ function commonConfig() {
 
 function interactiveConfig() {
   return {
+    mode: "production",
     resolve: {
       alias: {
-        react: "preact-compat/dist/preact-compat.min.js",
-        "react-dom": "preact-compat/dist/preact-compat.min.js",
+        react: "preact-compat",
+        "react-dom": "preact-compat",
       },
     },
-    plugins: [
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false,
-        },
-      }),
-    ],
   };
 }
 
 function developmentConfig() {
   return {
+    // https://stackoverflow.com/a/48082383/228885
+    externals: {
+      "node-fetch": "fetch",
+    },
     module: {
       rules: [
         {
@@ -112,6 +111,7 @@ function developmentConfig() {
 
 function buildConfig() {
   return {
+    mode: "production",
     module: {
       rules: [
         {
